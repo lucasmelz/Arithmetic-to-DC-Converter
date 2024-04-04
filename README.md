@@ -16,6 +16,10 @@ This project is an integer calculator that parses arithmetic expressions with va
 2. **ANTLR Runtime**: Download the ANTLR 4.13.1 runtime jar (`antlr-runtime-4.13.1.jar`) from the [ANTLR website](https://www.antlr.org/download/antlr-4.13.1-complete.jar) and place it in your project directory.
 3. **Generate Parser and Lexer** (if necessary): Run the following command in your project directory where your `.g4` grammar file is located:
    ```sh
+   antlr -visitor Arithmetic.g4
+   ```
+   or
+   ```sh
    antlr4 -visitor Arithmetic.g4
    ```
    This step is only needed if you modify the grammar and need to regenerate the parser/lexer files.
@@ -40,12 +44,20 @@ To run the program, compile the Java sources including the ANTLR runtime in the 
 
 ### Example Usage
 
-- **Direct Input**:
-  ```sh
-  echo 'a=3*4 ; x=2+a*5' | java -cp .:antlr-runtime-4.13.1.jar Main | dc
-  ```
-- **Using a File**:
-  If you have a file `input.txt` with arithmetic expressions, you can process it as follows:
-  ```sh
-  cat input.txt | java -cp .:antlr-runtime-4.13.1.jar Main | dc
-  ```
+```sh
+echo 'a=5+3; a*2' | java -cp .:antlr-runtime-4.13.1.jar Main | dc
+```
+
+Expected output: 16
+
+```sh
+echo 'a=2; b=a+3; c=b*4; c-a' | java -cp .:antlr-runtime-4.13.1.jar Main | dc
+```
+
+Expected output: 18
+
+```sh
+echo '(5+3)*2' | java -cp .:antlr-runtime-4.13.1.jar Main | dc
+```
+
+Expected output: 16
